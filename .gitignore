@@ -4,16 +4,15 @@ __pycache__/
 
 # C extensions
 *.so
-
+.idea
 # Distribution / packaging
 .Python
-env/
+venv/
 bin/
 build/
 develop-eggs/
 dist/
 eggs/
-lib/
 lib64/
 parts/
 sdist/
