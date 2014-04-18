@@ -101,5 +101,7 @@ try:
 except ImportError:
     pass
 
-from tgext.pluggable import plug
+from tgext.pluggable import plug, replace_template
+
 plug(base_config, 'myplug', img1_url=tg.lurl('/img/img1.jpg'))
+replace_template(base_config, 'myplug.templates.index', 'hello_tgpluggable.templates.replaces.index_replace')
