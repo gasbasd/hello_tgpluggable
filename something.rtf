@@ -1,0 +1,89 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf190
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red164\green8\blue0;\red217\green11\blue0;\red255\green39\blue18;
+\red63\green105\blue30;\red102\green177\blue50;\red85\green142\blue40;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural
+
+\f0\fs24 \cf2 \
+
+\fs26 \cf3 STEP 1\
+app_cfg
+\fs24 \cf0 \
+\
+from tgext.pluggable import plug, replace_template, load_template_patches\
+#plug(base_config, 'myplug')\
+\
+\cf4 STEP 2\
+app_cfg\cf0 \
+\
+plug(base_config, 'myplug', 'myplug', img1_url=tg.lurl('/img/img1.jpg'))\
+\
+\cf4 myplug/init\
+\cf0 \
+app_config['_pluggable_myplug_config'] = options\
+\
+\cf4 STEP 3\
+app_cfg\cf0 \
+replace_template(base_config, 'myplug.templates.replace_template', 'hello-tgpluggable.templates.replaces.replace_template_replace')\
+\
+\cf5 templates/replaces/replace_template_replace\
+\cf0 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"\
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\
+<html xmlns="http://www.w3.org/1999/xhtml"\
+      xmlns:py="http://genshi.edgewall.org/"\
+      xmlns:xi="http://www.w3.org/2001/XInclude">\
+\
+  <xi:include href="master.html" />\
+\
+<head>\
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" py:if="False"/>\
+  <title>Welcome to TurboGears pluggable Application</title>\
+  <link rel="stylesheet" type="text/css" media="screen" href="$\{tg.url('/_pluggable/myplug/css/style.css')\}" />\
+</head>\
+\
+<body>\
+    <div py:if="request.identity">Hi $\{request.identity['user']\}</div>\
+    <div id="hello_box">\
+        <img src="$\{tg.url('/img/img2.jpg')\}" style="width: 400px"/>\
+        <h2>This is the replaced template!!</h2>\
+    </div>\
+</body>\
+</html>\cf5 \
+\
+\cf3 STEP 4\
+app_cfg\
+\
+\cf0 load_template_patches(base_config)\
+\cf3 \
+\cf6 template_patches.xml\
+\cf0 <patches>\
+  <patch template="myplug.templates.patch_template">\
+    <prepend selector="#patch-div" template="hello_tgpluggable.templates.patch.patch" />\
+  </patch>\
+</patches>\cf3 \
+\cf0 \
+\cf7 templates/patch/patch.html\
+\cf0 <img src="$\{tg.url('/img/yeah.png')\}"/>\
+\
+\cf3 STEP 5\
+myplug/controllers/root/hooks\
+\cf0 tg.hooks.notify('myplug.my_hook', args=(user,))\
+\cf3 \
+\cf7 config/hooks.py\
+import tg\
+\
+class MyPlugHooks(object):\
+    @classmethod\
+    def register(cls, base_config):\
+        tg.hooks.register('myplug.my_hook', cls.my_hook)\
+\
+    @classmethod\
+    def my_hook(cls, user):\
+        user.display_name = 'Simone'\
+\cf3 \
+app_cfg\
+\cf0 from hello_tgpluggable.config.hooks import MyPlugHooks\
+MyPlugHooks.register(base_config)\
+\
+}

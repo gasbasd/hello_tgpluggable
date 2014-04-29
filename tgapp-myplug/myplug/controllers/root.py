@@ -35,5 +35,4 @@ class RootController(TGController):
     @expose('myplug.templates.hooks')
     def hooks(self, **kw):
         user = request.identity['user']
-        tg.hooks.notify('myplug.my_hook', args=(user,))
         return {'user_name':user.display_name}

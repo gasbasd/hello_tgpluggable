@@ -101,19 +101,13 @@ try:
 except ImportError:
     pass
 
-#STEP 1
-from tgext.pluggable import plug, replace_template, load_template_patches
-#plug(base_config, 'myplug')
 
-#STEP 2.0
-plug(base_config, 'myplug', 'myplug', img1_url=tg.lurl('/img/img1.jpg'))
+
+
 
 #STEP 3
-replace_template(base_config, 'myplug.templates.replace_template', 'hello-tgpluggable.templates.replaces.replace_template_replace')
 
 #STEP 4
-load_template_patches(base_config)
 
 #STEP 5
-from hello_tgpluggable.config.hooks import MyPlugHooks
-MyPlugHooks.register(base_config)
+

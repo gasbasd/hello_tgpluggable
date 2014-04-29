@@ -3,6 +3,4 @@
 
 
 def plugme(app_config, options):
-    #STEP 2.5
-    #app_config['_pluggable_myplug_config'] = options
     return dict(appid='myplug', global_helpers=False)
