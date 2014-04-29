@@ -1,0 +1,5 @@
+<patches>
+  <patch template="myplug.templates.patch_template">
+    <prepend selector="#patch-div" template="hello_tgpluggable.templates.patch.patch" />
+  </patch>
+</patches>

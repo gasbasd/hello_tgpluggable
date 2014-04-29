@@ -41,7 +41,9 @@ install_requires=[
     "repoze.who",
     "tw2.forms",
     "tgext.admin >= 0.6.1",
-    "tgext.pluggable"
+    "tgext.pluggable",
+    "lxml",
+    "cssselect"
     ]
 
 setup(
